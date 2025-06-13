@@ -44,6 +44,7 @@
                         --out \'./\'
                         --format \'ALL\'
                         --disableGithub
+                        --nvdApiKey="$NVD_API_KEY" \
                         --prettyPrint''',odcInstallation: 'DC_9'
                         }
                     }

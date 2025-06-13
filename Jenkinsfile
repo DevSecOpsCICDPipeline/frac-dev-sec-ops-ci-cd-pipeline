@@ -38,6 +38,7 @@
                         --scan \'./\'
                         --out \'./\'
                         --format \'ALL\'
+                        --disableGithub \
                         --prettyPrint''', odcInstallation: 'DC_9'
                         }
                     }

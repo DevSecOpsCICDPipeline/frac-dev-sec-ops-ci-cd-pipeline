@@ -43,7 +43,8 @@
                         --scan \'./\'
                         --out \'./\'
                         --format \'ALL\'
-                        --prettyPrint''', nvdApiKey: '$NVD_API_KEY',odcInstallation: 'DC_9'
+                        --nvdApiKey ${NVD_API_KEY}
+                        --prettyPrint''',odcInstallation: 'DC_9'
                         }
                     }
                     }

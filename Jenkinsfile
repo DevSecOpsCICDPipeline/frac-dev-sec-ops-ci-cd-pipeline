@@ -6,7 +6,7 @@
                 }
 
             environment {
-            NVD_API_KEY = credentials('nvd-api-key') // Bind secret text
+            NVD_API_KEY = credentials('NVD_API_KEY') // Bind secret text
             }
                         
                 stages{

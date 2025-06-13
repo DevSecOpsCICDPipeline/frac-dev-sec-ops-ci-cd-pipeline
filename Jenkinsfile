@@ -38,12 +38,12 @@
 
                     stage('OWASP Dependency Check'){
                         steps{
-                        // dependencyCheck additionalArguments: '--scan ./ --format XML ', odcInstallation: 'DC_9'
-                        dependencyCheck additionalArguments: '''
-                        --scan \'./\'
-                        --out \'./\'
-                        --format \'ALL\'
-                        --prettyPrint''',odcInstallation: 'DC_9'
+                        dependencyCheck additionalArguments: '--scan ./ --format XML ', odcInstallation: 'DC_9'
+                        // dependencyCheck additionalArguments: '''
+                        // --scan \'./\'
+                        // --out \'./\'
+                        // --format \'ALL\'
+                        // --prettyPrint''',odcInstallation: 'DC_9'
                         }
                     }
                     }

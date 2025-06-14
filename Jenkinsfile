@@ -5,9 +5,9 @@
                     maven "Maven_3.9.6"
                 }
 
-            environment {
-            NVD_API_KEY = credentials('NVD_API_KEY') // Bind secret text
-            }
+            // environment {
+            // NVD_API_KEY = credentials('NVD_API_KEY') // Bind secret text
+            // }
                         
                 stages{
                     stage('mvn version'){

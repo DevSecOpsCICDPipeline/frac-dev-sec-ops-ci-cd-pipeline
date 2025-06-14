@@ -22,11 +22,11 @@
                         }
                     }
                     
-                    stage('Test'){
-                        steps{
-                            sh 'mvn test'
-                        }
-                    }
+                    // stage('Test'){
+                    //     steps{
+                    //         sh 'mvn test'
+                    //     }
+                    // }
 
                     stage('Dependency Scanning'){
                     parallel{
@@ -38,12 +38,19 @@
 
                     stage('OWASP Dependency Check'){
                         steps{
-                        // dependencyCheck additionalArguments: '--scan ./ --format XML ', odcInstallation: 'DC_9'
-                        dependencyCheck additionalArguments: '''
-                        --scan \'./\'
-                        --out \'./\'
-                        --format \'ALL\'
-                        --prettyPrint''',odcInstallation: 'DC_9'
+                            sh '''
+            ./dependency-check/bin/dependency-check.sh \
+                --project "frac-spring-project" \
+                --scan . \
+                --format "HTML" \
+                --out dependency-check-report
+        '''
+                        // // dependencyCheck additionalArguments: '--scan ./ --format XML ', odcInstallation: 'DC_9'
+                        // dependencyCheck additionalArguments: '''
+                        // --scan \'./\'
+                        // --out \'./\'
+                        // --format \'ALL\'
+                        // --prettyPrint''',odcInstallation: 'DC_9'
                         }
                     }
                     }

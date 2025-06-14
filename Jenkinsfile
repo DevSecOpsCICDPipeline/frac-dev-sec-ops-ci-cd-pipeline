@@ -39,20 +39,9 @@
                     stage('OWASP Dependency Check'){
                         steps{
                             sh '''
-
-            ./dependency-check/bin/dependency-check.sh \
-               --nvdApiKey $NVD_API_KEY \
-                --project "frac-spring-project" \
-                --scan . \
-                --format "HTML" \
-                --out dependency-check-report
-        '''
-                        // // dependencyCheck additionalArguments: '--scan ./ --format XML ', odcInstallation: 'DC_9'
-                        // dependencyCheck additionalArguments: '''
-                        // --scan \'./\'
-                        // --out \'./\'
-                        // --format \'ALL\'
-                        // --prettyPrint''',odcInstallation: 'DC_9'
+                             dependencyCheck additionalArguments: "--scan ./ --format XML --nvdApiKey ${NVD_API_KEY}",
+                                odcInstallation: 'DC_9'
+                         '''
                         }
                     }
                     }

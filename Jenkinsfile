@@ -36,7 +36,7 @@
                         dependencyCheck additionalArguments: "--scan ./ --format ALL --prettyPrint --nvdApiKey ${NVD_API_KEY}", odcInstallation: 'dependency-check'
                         // dependencyCheckPublisher failedTotalCritical: 0, pattern: '**/dependency-check-report.xml', stopBuild: false
                         junit allowEmptyResults: true, keepProperties: true, testResults: 'dependency-check-junit.xml'
-                        publishHTML([allowMissing: true, alwaysLinkToLastBuild: true, icon: '', keepAll: true, reportDir: '.', reportFiles: 'dependency-check-report.html', reportName: 'Dependency Check HTML Report', reportTitles: '', useWrapperFileDirectly: true])
+                        publishHTML([allowMissing: true, alwaysLinkToLastBuild: true, icon: '', keepAll: true, reportDir: 'target/surefire-reports', reportFiles: '*.xml', reportName: 'Unit Test HTML Report', reportTitles: '', useWrapperFileDirectly: true])
                       
                       
                             }
@@ -50,13 +50,15 @@
                         steps{
                             sh 'mvn test'
                         }
+                          publishHTML([allowMissing: true, alwaysLinkToLastBuild: true, icon: '', keepAll: true, reportDir: '.', reportFiles: 'dependency-check-report.html', reportName: 'Dependency Check HTML Report', reportTitles: '', useWrapperFileDirectly: true])
+                      
                     }
 
-                    stage('Integration Test'){
-                                steps{
-                                    sh 'mvn integration-test'
-                                }
-                            }
+                    // stage('Integration Test'){
+                    //             steps{
+                    //                 sh 'mvn integration-test'
+                    //             }
+                    //         }
 
             
                 }

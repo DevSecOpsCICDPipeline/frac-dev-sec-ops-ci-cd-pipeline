@@ -51,7 +51,8 @@
                     }
                         stage("SAST - SonarQube"){
                                     steps{
-                                            sh ''' $SONAR_SCANNER_HOME/bin/sonar-scanner 
+                                            sh ''' 
+                                        $SONAR_SCANNER_HOME/bin/sonar-scanner 
                                         -Dsonar.projectKey=frac-dev-sec-solar-system \
                                         -Dsonar.java.binaries=. \
                                         -Dsonar.host.url=http://ec2-44-214-89-229.compute-1.amazonaws.com:9000 \

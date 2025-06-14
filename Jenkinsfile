@@ -38,10 +38,7 @@
 
                     stage('OWASP Dependency Check'){
                         steps{
-                            sh '''
-                             dependencyCheck additionalArguments: "--scan ./ --format XML --nvdApiKey ${NVD_API_KEY}",
-                                odcInstallation: 'DC_9'
-                         '''
+                        dependencyCheck additionalArguments: '--scan ./ --format XML ', odcInstallation: 'dependency-check'
                         }
                     }
                     }

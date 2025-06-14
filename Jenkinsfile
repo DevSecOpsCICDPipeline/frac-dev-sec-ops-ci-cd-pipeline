@@ -56,7 +56,7 @@
                                         -Dsonar.projectKey=frac-dev-sec-solar-system \
                                         -Dsonar.java.binaries=. \
                                         -Dsonar.host.url=http://ec2-44-214-89-229.compute-1.amazonaws.com:9000 \
-                                        -Dsonar.login=squ_2e2313ed15183148b2a2c6873e494a7fc9858996
+                                        -Dsonar.login=sqp_d85607ace1beeba2193f628068e73f8bfbbe0295
                                             '''
                                         
                                     }

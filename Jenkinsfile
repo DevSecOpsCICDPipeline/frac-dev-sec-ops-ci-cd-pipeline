@@ -7,6 +7,7 @@
 
                 environment {
                      NVD_API_KEY = credentials('nvd-api-key')
+                     SONAR_SCANNER_HOME = tool 'sonar-scanner-7.1.0'
                 }
                         
                 stages{
@@ -44,13 +45,21 @@
 
                         stage('Test'){
                         steps{
-                            sh 'mvn test'
-                            
+                            sh 'mvn test'                            
                         }
-                         
-                      
+                                              
                     }
-
+                        stage("SAST - SonarQube"){
+                                    steps{
+                                            sh ''' $SONAR_SCANNER_HOME/bin/sonar-scanner 
+                                        -Dsonar.projectKey=frac-dev-sec-solar-system \
+                                        -Dsonar.java.binaries=. \
+                                        -Dsonar.host.url=http://ec2-44-214-89-229.compute-1.amazonaws.com:9000 \
+                                        -Dsonar.login=squ_2e2313ed15183148b2a2c6873e494a7fc9858996
+                                            '''
+                                        
+                                    }
+                                }
             
                 }
 
@@ -63,3 +72,11 @@
                     }
                 }
             }
+
+
+
+//             		Analyze "frac-dev-sec-solar-system": sqp_e5509bc288936e4e951e53e47c0f40e340f1cbb4
+// 		mvn clean verify sonar:sonar \
+//   -Dsonar.projectKey=frac-dev-sec-solar-system \
+//   -Dsonar.host.url=http://ec2-44-214-89-229.compute-1.amazonaws.com:9000 \
+//   -Dsonar.login=squ_2e2313ed15183148b2a2c6873e494a7fc9858996

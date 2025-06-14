@@ -39,7 +39,9 @@
                     stage('OWASP Dependency Check'){
                         steps{
                             sh '''
+
             ./dependency-check/bin/dependency-check.sh \
+               --data /tmp/dc-data \
                 --project "frac-spring-project" \
                 --scan . \
                 --format "HTML" \

@@ -5,9 +5,9 @@
                     maven "Maven_3.9.6"
                 }
 
-            environment {
-            NVD_API_KEY = "eaeae46e-cd3c-479b-9c21-6bd85497f290" // Bind secret text
-            }
+                environment {
+                     NVD_API_KEY = credentials('nvd-api-key')
+                }
                         
                 stages{
                     stage('mvn version'){
@@ -22,11 +22,11 @@
                         }
                     }
                     
-                    // stage('Test'){
-                    //     steps{
-                    //         sh 'mvn test'
-                    //     }
-                    // }
+                    stage('Test'){
+                        steps{
+                            sh 'mvn test'
+                        }
+                    }
 
                     stage('Dependency Scanning'){
                     parallel{
@@ -38,7 +38,7 @@
 
                     stage('OWASP Dependency Check'){
                         steps{
-                        dependencyCheck additionalArguments: "--scan ./ --format XML --nvdApiKey ${NVD_API_KEY}", odcInstallation: 'dependency-check'
+                        dependencyCheck additionalArguments: "--scan ./ --format ALL --prettyPrint --nvdApiKey ${NVD_API_KEY}", odcInstallation: 'dependency-check'
                         }
                     }
                     }

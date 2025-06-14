@@ -49,6 +49,11 @@
                         }
                     }
 
+                    stage('Integration Test'){
+                                steps{
+                                    sh 'mvn integration-test'
+                                }
+                            }
 
             
                 }

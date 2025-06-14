@@ -50,16 +50,13 @@
                                               
                     }
                         stage("SAST - SonarQube"){
-                                    steps{
-                                            sh ''' 
-                                        $SONAR_SCANNER_HOME/bin/sonar-scanner 
-                                        -Dsonar.projectKey=frac-dev-sec-solar-system \
-                                        -Dsonar.java.binaries=. \
-                                        -Dsonar.host.url=http://ec2-44-214-89-229.compute-1.amazonaws.com:9000 \
-                                        -Dsonar.token=sqp_d85607ace1beeba2193f628068e73f8bfbbe0295
-                                            '''
-                                        
-                                    }
+                               steps{
+                                withSonarQubeEnv('sonarqube') {
+                                    sh ''' $SONAR_SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=frac-dev-sec-solar-system \
+                                    -Dsonar.java.binaries=. \
+                                    -Dsonar.projectKey=frac-dev-sec-solar-system '''
+                }
+            }
                                 }
             
                 }

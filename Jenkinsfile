@@ -5,9 +5,9 @@
                     maven "Maven_3.9.6"
                 }
 
-            // environment {
-            // NVD_API_KEY = credentials('NVD_API_KEY') // Bind secret text
-            // }
+            environment {
+            NVD_API_KEY = "eaeae46e-cd3c-479b-9c21-6bd85497f290" // Bind secret text
+            }
                         
                 stages{
                     stage('mvn version'){
@@ -41,7 +41,7 @@
                             sh '''
 
             ./dependency-check/bin/dependency-check.sh \
-               --data /tmp/dc-data \
+               --nvdApiKey $NVD_API_KEY \
                 --project "frac-spring-project" \
                 --scan . \
                 --format "HTML" \

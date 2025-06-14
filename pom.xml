@@ -81,7 +81,7 @@
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-web</artifactId>
-      <version>6.1.16</version>
+      <version>5.3.39</version>
     </dependency>
     <dependency>
       <groupId>net.sourceforge.stripes</groupId>
@@ -222,7 +222,6 @@
             <overwrite>true</overwrite>
           </configuration>
         </plugin>
-
 <!--        <plugin>-->
 <!--          <groupId>org.codehaus.cargo</groupId>-->
 <!--          <artifactId>cargo-maven3-plugin</artifactId>-->
@@ -316,6 +315,7 @@
     <mockito.version>5.6.0</mockito.version>
     <hsqldb.version>2.7.2</hsqldb.version>
     <module.name>org.mybatis.jpetstore</module.name>
+
     <!-- Reproducible Builds -->
     <project.build.outputTimestamp>1670877034</project.build.outputTimestamp>
   </properties>

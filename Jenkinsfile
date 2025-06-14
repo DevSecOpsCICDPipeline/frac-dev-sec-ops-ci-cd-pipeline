@@ -52,11 +52,11 @@
                         }
                     }
 
-                    // stage('Integration Test'){
-                    //             steps{
-                    //                 sh 'mvn integration-test'
-                    //             }
-                    //         }
+                    stage('Integration Test'){
+                                steps{
+                                    sh 'mvn integration-test'
+                                }
+                            }
 
             
                 }

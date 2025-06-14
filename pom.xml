@@ -238,6 +238,9 @@
               <properties>
                 <cargo.daemon.url>http://localhost:18000</cargo.daemon.url>
                 <cargo.daemon.handleid>${project.artifactId}</cargo.daemon.handleid>
+                <cargo.servlet.port>8089</cargo.servlet.port>
+                  <!-- <cargo.rmi.port>8005</cargo.rmi.port>
+        <cargo.tomcat.ajp.port>8009</cargo.tomcat.ajp.port> -->
               </properties>
             </daemon>
           </configuration>
@@ -331,6 +334,9 @@
       <properties>
         <tomcat.major-version>9</tomcat.major-version>
         <tomcat.version>9.0.70</tomcat.version>
+        <cargo.servlet.port>8089</cargo.servlet.port> <!-- CHANGE PORT HERE -->
+<!--        <cargo.rmi.port>8005</cargo.rmi.port>         &lt;!&ndash; Optional &ndash;&gt;-->
+<!--        <cargo.tomcat.ajp.port>8009</cargo.tomcat.ajp.port> &lt;!&ndash; Optional &ndash;&gt;-->
       </properties>
     </profile>
     <!-- <profile>

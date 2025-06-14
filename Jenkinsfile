@@ -22,12 +22,6 @@
                         }
                     }
                     
-                    stage('Test'){
-                        steps{
-                            sh 'mvn test'
-                        }
-                    }
-
                     stage('Dependency Scanning'){
                     parallel{
                     stage('Dependency Audit'){
@@ -48,6 +42,13 @@
                     }
                     }
                     }
+
+                        stage('Test'){
+                        steps{
+                            sh 'mvn test'
+                        }
+                    }
+
 
             
                 }

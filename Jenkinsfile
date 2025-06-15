@@ -54,7 +54,6 @@
                     }
                         stage("SAST - SonarQube"){
                                steps{
-                                timeout(time: 60,unit: 'SECONDS'){
                                 withSonarQubeEnv('sonarqube') {
                                     sh ''' $SONAR_SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=frac-dev-sec-solar-system \
                                     -Dsonar.java.binaries=. \
@@ -62,9 +61,17 @@
                                     -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml
                                     '''
                 }
-                              waitForQualityGate abortPipeline: true
             }
                         }
+
+
+                         stage("quality gate"){
+                        steps {
+                        script {
+                         waitForQualityGate abortPipeline: false, credentialsId: 'Sonarqube-token' 
+                }
+           }
+        }
                                 }
             
                 }

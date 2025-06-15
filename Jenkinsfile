@@ -3,6 +3,7 @@
                 
                 tools{
                     maven "Maven_3.9.6"
+                    nodejs 'NODEJS-24-2-0'
                 }
 
                 environment {
@@ -15,6 +16,8 @@
                         steps{
                             sh 'echo maven version'
                             sh 'mvn --version'
+                            sh 'echo Nodejs version'
+                            sh 'node -v'
                         }
                     }
                     stage('Build'){
@@ -51,6 +54,7 @@
                     }
                         stage("SAST - SonarQube"){
                                steps{
+                               sh 'pwd && ls -la target/site/jacoco'
                                 withSonarQubeEnv('sonarqube') {
                                     sh ''' $SONAR_SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=frac-dev-sec-solar-system \
                                     -Dsonar.java.binaries=. \

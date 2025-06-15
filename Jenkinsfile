@@ -45,7 +45,7 @@
 
                         stage('Test'){
                         steps{
-                            sh 'mvn test'                            
+                            sh 'mvn clean test jacoco:report -DskipTests=false'                            
                         }
                                               
                     }

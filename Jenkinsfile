@@ -74,7 +74,7 @@
         }
                                 }
             
-                }
+                
 
                 post{
                     always{
@@ -84,7 +84,7 @@
                           publishHTML([allowMissing: true, alwaysLinkToLastBuild: true, icon: '', keepAll: true, reportDir: 'target/surefire-reports', reportFiles: '*.xml', reportName: 'Unit Test HTML Report', reportTitles: '', useWrapperFileDirectly: true])
                     }
                 }
-            
+            }
 
 
 

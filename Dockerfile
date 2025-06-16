@@ -18,4 +18,5 @@ COPY .mvn/ .mvn/
 COPY mvnw .
 EXPOSE 8089
 COPY /target/*.war /usr/src/myapp/*.war
-CMD ./mvnw cargo:run -P tomcat90
+CMD ./mvnw cargo:run
+# CMD ./mvnw cargo:run -P tomcat90

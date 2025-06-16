@@ -14,13 +14,13 @@
               stages {
                 stage('Cleaning Workspace') {
                   steps {
-                   cleanWs()
+                    cleanWs()
                   }
                 }
-                stage ('checkout SCM') {
-                 steps {
-               git branch: 'main', changelog: false, poll: false, url: 'https://github.com/DevSecOpsCICDPipeline/frac-dev-sec-ops-ci-cd-pipeline.git'
-                 }
+                stage('checkout SCM') {
+                  steps {
+                    git branch: 'main', changelog: false, poll: false, url: 'https://github.com/DevSecOpsCICDPipeline/frac-dev-sec-ops-ci-cd-pipeline.git'
+                  }
                 }
                 stage('Compiling Maven Code') {
                   steps {
@@ -37,12 +37,13 @@
                 stage("SAST - SonarQube") {
                   steps {
                     withSonarQubeEnv('sonarqube') {
-                      sh ''' 
-                      $SONAR_SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=frac-dev-sec-solar-system \
-                                    -Dsonar.java.binaries=. \
-                                    -Dsonar.projectKey=frac-dev-sec-solar-system \
-                                    -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml
-                      '''
+                      sh ''
+                      ' 
+                      $SONAR_SCANNER_HOME / bin / sonar - scanner - Dsonar.projectName = frac - dev - sec - solar - system\ -
+                        Dsonar.java.binaries = .\ -
+                        Dsonar.projectKey = frac - dev - sec - solar - system\ -
+                        Dsonar.coverage.jacoco.xmlReportPaths = target / site / jacoco / jacoco.xml ''
+                      '
                     }
                   }
                 }
@@ -59,7 +60,7 @@
                     sh 'mvn clean install -DskipTests=true'
                   }
                 }
-             stage('Dependency Scanning') {
+                stage('Dependency Scanning') {
                   parallel {
                     stage('Dependency Audit') {
                       steps {
@@ -79,85 +80,91 @@
                   }
                 }
 
-                    stage ('Building Docker Image'){
-                        steps {
-                        sh  'docker build -t slpavaniv/frac-spring-project:${BUILD_TAG} .'
-                        }
-                    }
-                    stage("Image Scanning using TRIVY"){
-                         steps{
-                         sh '''
-                         trivy image slpavaniv/frac-spring-project:${BUILD_TAG} \
-                         --severity LOW,MEDIUM,HIGH \
-                         --exit-code 0 \
-                         --quiet \
-                         --format json -o trivy-image-MEDIUM-results.json
-
-                         trivy image slpavaniv/frac-spring-project:${BUILD_TAG} \
-                         --severity CRITICAL \
-                         --exit-code 0 \
-                         --quiet \
-                         --format json -o trivy-image-CRITICAL-results.json
-                         '''
-                        }
-                        post{
-                            always{
-                                sh'''
-                                trivy convert \
-                                --format template --template "@/usr/local/share/trivy/templates/html.tpl" \
-                                --output trivy-image-MEDIUM-results.html trivy-image-MEDIUM-results.json
-
-                                trivy convert \
-                                --format template --template "@/usr/local/share/trivy/templates/html.tpl" \
-                                --output trivy-image-CRITICAL-results.html trivy-image-CRITICAL-results.json
-
-                                  trivy convert \
-                                --format template --template "@/usr/local/share/trivy/templates/junit.tpl" \
-                                --output trivy-image-MEDIUM-results.xml trivy-image-MEDIUM-results.json
-
-                                trivy convert \
-                                --format template --template "@/usr/local/share/trivy/templates/junit.tpl" \
-                                --output trivy-image-CRITICAL-results.xml trivy-image-CRITICAL-results.json
-                                '''
-                            }
-                        }
-                    }
-
-            stage ('Push Docker Image'){
-                        steps {
-                          withDockerRegistry(credentialsId: 'docker-hub-credentials', url:"") {
-                             sh  'docker push  slpavaniv/frac-spring-project:${BUILD_TAG}'
-                          }
-                        }
-                    }
-
-            stage('QA testing Stage'){
-              steps{
-                   sh 'docker rm -f qacontainer'
-                   sh 'docker run -d --name qacontainer -p 8089:8089 slpavaniv/frac-spring-project:${BUILD_TAG}'
-                   sleep time: 60, unit: 'SECONDS'
-                   retry(10){
-                sh 'curl --silent http://ec2-44-192-132-199.compute-1.amazonaws.com:8089/jpetstore/ | grep JPetStore'
+                stage('Building Docker Image') {
+                  steps {
+                    sh 'docker build -t slpavaniv/frac-spring-project:${BUILD_TAG} .'
+                  }
                 }
-              }
-            }
-              post {
-                always {
-                  junit allowEmptyResults: true, keepProperties: true, testResults: 'dependency-check-junit.xml'
-                  junit allowEmptyResults: true, keepProperties: true, testResults: 'target/surefire-reports/*.xml'
-                  junit allowEmptyResults: true, keepProperties: true, testResults: 'trivy-image-MEDIUM-results.xml'
-                  junit allowEmptyResults: true, keepProperties: true, testResults: 'trivy-image-CRITICAL-results.xml'
-                
-                  publishHTML([allowMissing: true, alwaysLinkToLastBuild: true, icon: '', keepAll: true, reportDir: '.', reportFiles: 'dependency-check-report.html', reportName: 'Dependency Check HTML Report', reportTitles: '', useWrapperFileDirectly: true])
-                 
-                  publishHTML([allowMissing: true, alwaysLinkToLastBuild: true, icon: '', keepAll: true, reportDir: 'target/surefire-reports', reportFiles: '*.xml', reportName: 'Unit Test HTML Report', reportTitles: '', useWrapperFileDirectly: true])
-                 
-                  publishHTML([allowMissing: true, alwaysLinkToLastBuild: true, icon: '', keepAll: true, reportDir: './', reportFiles: 'trivy-image-CRITICAL-results.html', reportName: 'Trivy Image Critical Vul Report', reportTitles: '', useWrapperFileDirectly: true])
+                stage("Image Scanning using TRIVY") {
+                  steps {
+                    sh ''
+                    '
+                    trivy image slpavaniv / frac - spring - project: $ {
+                        BUILD_TAG
+                      }\
+                      --severity LOW, MEDIUM, HIGH\
+                      --exit - code 0\
+                      --quiet\
+                      --format json - o trivy - image - MEDIUM - results.json
+
+                    trivy image slpavaniv / frac - spring - project: $ {
+                        BUILD_TAG
+                      }\
+                      --severity CRITICAL\
+                      --exit - code 0\
+                      --quiet\
+                      --format json - o trivy - image - CRITICAL - results.json ''
+                    '
+                  }
+                  post {
+                    always {
+                      sh ''
+                      '
+                      trivy convert\
+                      --format template--template "@/usr/local/share/trivy/templates/html.tpl"\
+                        --output trivy - image - MEDIUM - results.html trivy - image - MEDIUM - results.json
+
+                      trivy convert\
+                      --format template--template "@/usr/local/share/trivy/templates/html.tpl"\
+                        --output trivy - image - CRITICAL - results.html trivy - image - CRITICAL - results.json
+
+                      trivy convert\
+                      --format template--template "@/usr/local/share/trivy/templates/junit.tpl"\
+                        --output trivy - image - MEDIUM - results.xml trivy - image - MEDIUM - results.json
+
+                      trivy convert\
+                      --format template--template "@/usr/local/share/trivy/templates/junit.tpl"\
+                        --output trivy - image - CRITICAL - results.xml trivy - image - CRITICAL - results.json ''
+                      '
+                    }
+                  }
+                }
+
+                stage('Push Docker Image') {
+                  steps {
+                    withDockerRegistry(credentialsId: 'docker-hub-credentials', url: "") {
+                      sh 'docker push  slpavaniv/frac-spring-project:${BUILD_TAG}'
+                    }
+                  }
+                }
+
+                stage('QA testing Stage') {
+                  steps {
+                    sh 'docker rm -f qacontainer'
+                    sh 'docker run -d --name qacontainer -p 8089:8089 slpavaniv/frac-spring-project:${BUILD_TAG}'
+                    sleep time: 60, unit: 'SECONDS'
+                    retry(10) {
+                      sh 'curl --silent http://ec2-44-192-132-199.compute-1.amazonaws.com:8089/jpetstore/ | grep JPetStore'
+                    }
+                  }
+                }
+                post {
+                  always {
+                    junit allowEmptyResults: true, keepProperties: true, testResults: 'dependency-check-junit.xml'
+                    junit allowEmptyResults: true, keepProperties: true, testResults: 'target/surefire-reports/*.xml'
+                    junit allowEmptyResults: true, keepProperties: true, testResults: 'trivy-image-MEDIUM-results.xml'
+                    junit allowEmptyResults: true, keepProperties: true, testResults: 'trivy-image-CRITICAL-results.xml'
+
+                    publishHTML([allowMissing: true, alwaysLinkToLastBuild: true, icon: '', keepAll: true, reportDir: '.', reportFiles: 'dependency-check-report.html', reportName: 'Dependency Check HTML Report', reportTitles: '', useWrapperFileDirectly: true])
+
+                    publishHTML([allowMissing: true, alwaysLinkToLastBuild: true, icon: '', keepAll: true, reportDir: 'target/surefire-reports', reportFiles: '*.xml', reportName: 'Unit Test HTML Report', reportTitles: '', useWrapperFileDirectly: true])
+
+                    publishHTML([allowMissing: true, alwaysLinkToLastBuild: true, icon: '', keepAll: true, reportDir: './', reportFiles: 'trivy-image-CRITICAL-results.html', reportName: 'Trivy Image Critical Vul Report', reportTitles: '', useWrapperFileDirectly: true])
 
                     publishHTML([allowMissing: true, alwaysLinkToLastBuild: true, icon: '', keepAll: true, reportDir: './', reportFiles: 'trivy-image-MEDIUM-results.html', reportName: 'Trivy Image MEDIUM Vul Report', reportTitles: '', useWrapperFileDirectly: true])
+                  }
                 }
               }
-            }
             }
 
             //             		Analyze "frac-dev-sec-solar-system": sqp_e5509bc288936e4e951e53e47c0f40e340f1cbb4

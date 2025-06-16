@@ -122,13 +122,21 @@
                             }
                         }
                     }
+
+                       stage ('Push Docker Image'){
+                        steps {
+                          withDockerRegistry(credentialsId: 'docker-hub-credentials', url:"") {
+                             sh  'docker push  slpavaniv/frac-spring-project:${BUILD_TAG}'
+                          }
+                        }
+                    }
               }
               post {
                 always {
                   junit allowEmptyResults: true, keepProperties: true, testResults: 'dependency-check-junit.xml'
                   junit allowEmptyResults: true, keepProperties: true, testResults: 'target/surefire-reports/*.xml'
-                  junit allowEmptyResults: true, keepProperties: true, testResults: 'trivy-image-MEDIUM-results.html'
-                  junit allowEmptyResults: true, keepProperties: true, testResults: 'trivy-image-CRITICAL-results.html'
+                  junit allowEmptyResults: true, keepProperties: true, testResults: 'trivy-image-MEDIUM-results.xml'
+                  junit allowEmptyResults: true, keepProperties: true, testResults: 'trivy-image-CRITICAL-results.xml'
                 
                   publishHTML([allowMissing: true, alwaysLinkToLastBuild: true, icon: '', keepAll: true, reportDir: '.', reportFiles: 'dependency-check-report.html', reportName: 'Dependency Check HTML Report', reportTitles: '', useWrapperFileDirectly: true])
                  

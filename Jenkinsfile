@@ -140,6 +140,7 @@
                 sh 'curl --silent http://ec2-44-192-132-199.compute-1.amazonaws.com:8089/jpetstore/ | grep JPetStore'
                 }
               }
+              }
               post {
                 always {
                   junit allowEmptyResults: true, keepProperties: true, testResults: 'dependency-check-junit.xml'

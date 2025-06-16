@@ -131,8 +131,21 @@
                         }
                     }
 
+
+
+                  stage('QA testing Stage') {
+                     steps {
+                      sh 'docker rm -f qacontainer'
+                      sh 'docker run -d --name qacontainer -p 8089:8089 slpavaniv/frac-spring-project:${BUILD_TAG}'
+                      sleep time: 60, unit: 'SECONDS'
+                      retry(10) {
+                      sh 'curl --silent http://ec2-44-192-132-199.compute-1.amazonaws.com:8089/jpetstore/ | grep JPetStore'
+                    }
+                  }
+                }
                     
-              }
+              }  // end steps 
+
               post {
                 always {
                   junit allowEmptyResults: true, keepProperties: true, testResults: 'dependency-check-junit.xml'

@@ -146,7 +146,7 @@
                       sh 'docker run -d --name qacontainer -p 8089:8089 slpavaniv/frac-spring-project:${BUILD_TAG}'
                       sleep time: 60, unit: 'SECONDS'
                       retry(10) {
-                      sh 'curl --silent http://${JENKINS_URL}/jpetstore/ | grep JPetStore'
+                      sh 'curl --silent ${JENKINS_URL}/jpetstore/ | grep JPetStore'
                     }
                   }
                 }

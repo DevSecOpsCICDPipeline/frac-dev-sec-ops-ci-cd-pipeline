@@ -37,13 +37,12 @@
                 stage("SAST - SonarQube") {
                   steps {
                     withSonarQubeEnv('sonarqube') {
-                      sh ''
-                      ' $SONAR_SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=frac-dev-sec-solar-system \
+                      sh ''' 
+                      $SONAR_SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=frac-dev-sec-solar-system \
                                     -Dsonar.java.binaries=. \
                                     -Dsonar.projectKey=frac-dev-sec-solar-system \
-                                    // -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml
-                      ''
-                      '
+                                    -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml
+                      '''
                     }
                   }
                 }

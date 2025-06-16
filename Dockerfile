@@ -15,6 +15,6 @@
 FROM openjdk:21 
 WORKDIR /usr/src/myapp
 WORKDIR /usr/src/myapp
-EXPOSE 8080
+EXPOSE 8089
 COPY /target/*.war /usr/src/myapp/*.war
 CMD ./mvnw cargo:run -P tomcat90

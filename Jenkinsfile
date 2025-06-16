@@ -133,7 +133,7 @@
 
 
 
-                  stage('QA testing Stage') {
+                  stage ('QA testing Stage') {
                      steps {
                       sh 'docker rm -f qacontainer'
                       sh 'docker run -d --name qacontainer -p 8089:8089 slpavaniv/frac-spring-project:${BUILD_TAG}'

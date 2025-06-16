@@ -21,8 +21,22 @@
 # CMD ./mvnw cargo:run
 # # CMD ./mvnw cargo:run -P tomcat90
 
-FROM openjdk:21
-COPY . /usr/src/myapp
-WORKDIR /usr/src/myapp
-RUN ./mvnw clean package
-CMD ./mvnw cargo:run -P tomcat90
+# FROM openjdk:21
+# COPY . /usr/src/myapp
+# WORKDIR /usr/src/myapp
+# RUN ./mvnw clean package
+# CMD ./mvnw cargo:run -P tomcat90
+
+FROM tomcat:9.0
+
+# Remove default webapps (optional cleanup)
+RUN rm -rf /usr/local/tomcat/webapps/*
+
+# Change the default HTTP connector port from 8080 to 9090
+RUN sed -i 's/port="8080"/port="8089"/' /usr/local/tomcat/conf/server.xml
+
+# Copy your WAR
+COPY target/*.war /usr/local/tomcat/webapps/
+
+# Expose the new port
+EXPOSE 8089

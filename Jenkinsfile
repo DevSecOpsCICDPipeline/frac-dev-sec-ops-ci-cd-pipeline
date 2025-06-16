@@ -79,9 +79,11 @@
                   }
                 }
 
-              stage ('Building Docker Image'){
-                sh  'docker build -t slpavaniv/frac-spring-project:${BUILD_TAG} .'
-              }
+                    stage ('Building Docker Image'){
+                        steps {
+                        sh  'docker build -t slpavaniv/frac-spring-project:${BUILD_TAG} .'
+                        }
+                    }
               }
               post {
                 always {

@@ -140,7 +140,7 @@
                 sh 'curl --silent http://ec2-44-192-132-199.compute-1.amazonaws.com:8089/jpetstore/ | grep JPetStore'
                 }
               }
-              }
+            }
               post {
                 always {
                   junit allowEmptyResults: true, keepProperties: true, testResults: 'dependency-check-junit.xml'
@@ -157,6 +157,7 @@
                     publishHTML([allowMissing: true, alwaysLinkToLastBuild: true, icon: '', keepAll: true, reportDir: './', reportFiles: 'trivy-image-MEDIUM-results.html', reportName: 'Trivy Image MEDIUM Vul Report', reportTitles: '', useWrapperFileDirectly: true])
                 }
               }
+            }
             }
 
             //             		Analyze "frac-dev-sec-solar-system": sqp_e5509bc288936e4e951e53e47c0f40e340f1cbb4

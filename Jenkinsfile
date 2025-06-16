@@ -84,6 +84,23 @@
                         sh  'docker build -t slpavaniv/frac-spring-project:${BUILD_TAG} .'
                         }
                     }
+                    stage("Image Scanning using TRIVY"){
+                         steps{
+                         sh '''
+                         trivy image slpavaniv/frac-spring-project:${BUILD_TAG} \
+                         --severity LOW,MEDIUM,HIGH \
+                         --exit-code 0 \
+                         --quiet \
+                         --format json -o trivy-image-MEDIUM-results.json
+
+                         trivy image slpavaniv/frac-spring-project:${BUILD_TAG} \
+                         --severity CRITICAL \
+                         --exit-code 1 \
+                         --quiet \
+                         --format json -o trivy-image-CRITICAL-results.json
+                         '''
+                        }
+                    }
               }
               post {
                 always {

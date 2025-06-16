@@ -12,11 +12,17 @@
 # COPY --from=builder /usr/src/myapp/target/*.war /usr/src/myapp/*.war
 # CMD ./mvnw cargo:run -P tomcat90
 
-FROM openjdk:21 
+# FROM openjdk:21 
+# WORKDIR /usr/src/myapp
+# COPY .mvn/ .mvn/
+# COPY mvnw .
+# EXPOSE 8089
+# COPY /target/*.war /usr/src/myapp/*.war
+# CMD ./mvnw cargo:run
+# # CMD ./mvnw cargo:run -P tomcat90
+
+FROM openjdk:21
+COPY . /usr/src/myapp
 WORKDIR /usr/src/myapp
-COPY .mvn/ .mvn/
-COPY mvnw .
-EXPOSE 8089
-COPY /target/*.war /usr/src/myapp/*.war
-CMD ./mvnw cargo:run
-# CMD ./mvnw cargo:run -P tomcat90
+RUN ./mvnw clean package
+CMD ./mvnw cargo:run -P tomcat90

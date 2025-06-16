@@ -14,32 +14,12 @@
               stages {
                 stage('Cleaning Workspace') {
                   steps {
-                    cleanWs()
+                   cleanWs()
                   }
                 }
                 stage('Compiling Maven Code') {
                   steps {
                     sh 'mvn clean compile'
-                  }
-                }
-
-                stage('Dependency Scanning') {
-                  parallel {
-                    stage('Dependency Audit') {
-                      steps {
-                        sh 'echo checking Dependency Audit'
-                      }
-                    }
-
-                    stage('OWASP Dependency Check') {
-                      steps {
-                        catchError(buildResult: 'SUCCESS', message: 'Oops!it will be fixed in future release', stageResult: 'UNSTABLE') {
-                          dependencyCheck additionalArguments: "--scan ./ --format ALL --disableYarnAudit --prettyPrint --nvdApiKey ${NVD_API_KEY}", odcInstallation: 'dependency-check'
-                          // dependencyCheckPublisher failedTotalCritical: 0, pattern: '**/dependency-check-report.xml', stopBuild: false                                   
-                        }
-
-                      }
-                    }
                   }
                 }
 
@@ -75,11 +55,30 @@
                     sh 'mvn clean install -DskipTests=true'
                   }
                 }
+             stage('Dependency Scanning') {
+                  parallel {
+                    stage('Dependency Audit') {
+                      steps {
+                        sh 'echo checking Dependency Audit'
+                      }
+                    }
+
+                    stage('OWASP Dependency Check') {
+                      steps {
+                        catchError(buildResult: 'SUCCESS', message: 'Oops!it will be fixed in future release', stageResult: 'UNSTABLE') {
+                          dependencyCheck additionalArguments: "--scan ./ --format ALL --disableYarnAudit --prettyPrint --nvdApiKey ${NVD_API_KEY}", odcInstallation: 'dependency-check'
+                          // dependencyCheckPublisher failedTotalCritical: 0, pattern: '**/dependency-check-report.xml', stopBuild: false                                   
+                        }
+
+                      }
+                    }
+                  }
+                }
 
               stage ('Building Docker Image'){
                 sh  'docker build -t slpavaniv/frac-spring-project:${BUILD_TAG} .'
               }
-
+              }
               post {
                 always {
                   junit allowEmptyResults: true, keepProperties: true, testResults: 'dependency-check-junit.xml'

@@ -24,6 +24,7 @@
                 }
                 stage('Compiling Maven Code') {
                   steps {
+                    sh 'mvn -N io.takari:maven:wrapper'
                     sh 'mvn clean compile'
                   }
                 }

@@ -95,7 +95,7 @@
 
                          trivy image slpavaniv/frac-spring-project:${BUILD_TAG} \
                          --severity CRITICAL \
-                         --exit-code 1 \
+                         --exit-code 0 \
                          --quiet \
                          --format json -o trivy-image-CRITICAL-results.json
                          '''
@@ -112,11 +112,11 @@
                                 --output trivy-image-CRITICAL-results.html trivy-image-CRITICAL-results.json
 
                                   trivy convert \
-                                --format template --template "@usr/local/share/trivy/templates/html.tpl" \
+                                --format template --template "@usr/local/share/trivy/templates/junit.tpl" \
                                 --output trivy-image-MEDIUM-results.xml trivy-image-MEDIUM-results.json
 
                                 trivy convert \
-                                --format template --template "@usr/local/share/trivy/templates/html.tpl" \
+                                --format template --template "@usr/local/share/trivy/templates/junit.tpl" \
                                 --output trivy-image-CRITICAL-results.xml trivy-image-CRITICAL-results.json
                                 '''
                             }

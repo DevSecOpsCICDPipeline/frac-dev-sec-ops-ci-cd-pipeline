@@ -9,6 +9,7 @@
               environment {
                 NVD_API_KEY = credentials('nvd-api-key')
                 SONAR_SCANNER_HOME = tool 'sonar-scanner-7.1.0'
+                GIT_API_TOKEN = credentials('git-api-token')
               }
 
               stages {
@@ -162,7 +163,7 @@
 
                           #### Commit and Push to Feature Branch ####
                           git config --global user.email "ganislp@gmail.com"
-                          git remote set-url origin https://github.com/DevSecOpsCICDPipeline/frac-dev-sec-ops-k8s.git
+                          git remote set-url origin https://ganislp:$GIT_API_TOKEN@github.com/DevSecOpsCICDPipeline/frac-dev-sec-ops-k8s.git
                           git add .
                           git commit -am "Updated docker image"
                           git push -u origin feature-$BUILD_ID

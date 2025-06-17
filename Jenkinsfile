@@ -157,8 +157,8 @@
                           #### Replace Docker Tag #####
                           git checkout main
                           git checkout -b feature-$BUILD_ID
-                          sed -i "s#slpavaniv.*#slpavaniv/frac-spring-project:${BUILD_TAG}#g" deployment.yml
-                          cat deployment.yml
+                          sed -i "s#slpavaniv.*#slpavaniv/frac-spring-project:${BUILD_TAG}#g" deployment.yaml
+                          cat deployment.yaml
 
                           #### Commit and Push to Feature Branch ####
                           git config --global user.email "ganislp@gmail.com"

@@ -189,6 +189,29 @@
                       '''
                     }
                     }
+
+                    stage('App Deployed?'){
+                      steps{
+                        timeout(time: 1,unit:'DAYS'){
+                          input message: 'Is the PR Merged and ArgoCD Synced?',ok:'YES! PR is Merged and ArgoCD Application is Synced'
+
+                        }
+                      }
+                    }
+                    stage('DAST -OWSP ZAP'){
+                      steps{
+                        sh '''
+                        chmod 777 ${pwd}
+                        docker run --rm  -v ${pwd}:/zap/wrk/:rw owasp/zap2docker-stable zap-baseline.py \
+                        -f http://ec2-3-235-53-12.compute-1.amazonaws.com:8089/jpetstore \
+                        -r zap_report.html \
+                        -w zap_report.md
+                        -J zap_json-report.json
+                        -x zap_xml_report.xml
+
+                        '''
+                      }
+                    }
                     
               }  // end steps 
 

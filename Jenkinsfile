@@ -147,9 +147,9 @@
 
                 
                 stage ('K8S Update Image Tag'){
-                   when {
-                    branch 'main*'
-                   }
+                  //  when {
+                  //   branch 'main*'
+                  //  }
                         steps {
                          sh 'git clone -b main https://github.com/DevSecOpsCICDPipeline/frac-dev-sec-ops-k8s.git'
                          dir("frac-dev-sec-ops-k8s/k8s"){

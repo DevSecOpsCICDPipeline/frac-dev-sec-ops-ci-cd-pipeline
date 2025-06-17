@@ -173,9 +173,9 @@
                         }
                     }
                     stage('K8S - Raise PR'){
-                        when {
-                      branch 'PR*'
-                    }
+                    //     when {
+                    //   branch 'PR*'
+                    // }
                     steps{
                       sh '''
                     curl -L \
@@ -196,7 +196,7 @@
                 always {
 
                   script{
-                    if(fileExist('frac-dev-sec-ops-k8s')){
+                    if(fileExists('frac-dev-sec-ops-k8s')){
                       sh 'rm -rf frac-dev-sec-ops-k8s'
                     }
                   }

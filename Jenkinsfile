@@ -201,7 +201,7 @@
                     stage('DAST -OWSP ZAP'){
                       steps{
                         sh '''
-                        chmod 777 ${pwd}
+                        // chmod 777 ${pwd}
                         docker run --rm  -v ${pwd}:/zap/wrk/:rw owasp/zap2docker-stable zap-baseline.py \
                         -f http://ec2-3-235-53-12.compute-1.amazonaws.com:8089/jpetstore \
                         -r zap_report.html \

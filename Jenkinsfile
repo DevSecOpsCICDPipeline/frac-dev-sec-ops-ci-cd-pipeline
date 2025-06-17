@@ -162,7 +162,7 @@
 
                           #### Commit and Push to Feature Branch ####
                           git config --global user.email "ganislp@gmail.com"
-                          git remote set-url origin https://github.com/slpavaniv/DevSecOpsCICDPipeline/frac-dev-sec-ops-k8s.git
+                          git remote set-url origin https://github.com/DevSecOpsCICDPipeline/frac-dev-sec-ops-k8s.git
                           git add .
                           git commit -am "Updated docker image"
                           git push -u origin feature-$BUILD_ID

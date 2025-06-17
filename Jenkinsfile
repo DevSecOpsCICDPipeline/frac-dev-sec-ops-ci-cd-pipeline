@@ -177,6 +177,14 @@
 
               post {
                 always {
+
+                  script{
+                    if(fileExist('frac-dev-sec-ops-k8s')){
+                      sh 'rm -rf frac-dev-sec-ops-k8s'
+                    }
+                  }
+
+
                   junit allowEmptyResults: true, keepProperties: true, testResults: 'dependency-check-junit.xml'
                   junit allowEmptyResults: true, keepProperties: true, testResults: 'target/surefire-reports/*.xml'
                   junit allowEmptyResults: true, keepProperties: true, testResults: 'trivy-image-MEDIUM-results.xml'

@@ -153,50 +153,53 @@
                   //   branch 'main*'
                   //  }
                         steps {
-                         sh 'git clone -b main https://github.com/DevSecOpsCICDPipeline/frac-dev-sec-ops-k8s.git'
-                         dir("frac-dev-sec-ops-k8s/k8s"){
-                          sh '''
-                          #### Replace Docker Tag #####
-                          git checkout main
-                          git checkout -b feature-$BUILD_ID
-                          sed -i "s#slpavaniv.*#slpavaniv/frac-spring-project:${BUILD_TAG}#g" deployment.yaml
-                          cat deployment.yaml
+                          sh 'echo K8S Update Image Tag'
+                        //  sh 'git clone -b main https://github.com/DevSecOpsCICDPipeline/frac-dev-sec-ops-k8s.git'
+                        //  dir("frac-dev-sec-ops-k8s/k8s"){
+                        //   sh '''
+                        //   #### Replace Docker Tag #####
+                        //   git checkout main
+                        //   git checkout -b feature-$BUILD_ID
+                        //   sed -i "s#slpavaniv.*#slpavaniv/frac-spring-project:${BUILD_TAG}#g" deployment.yaml
+                        //   cat deployment.yaml
 
-                          #### Commit and Push to Feature Branch ####
-                          git config --global user.email "ganislp@gmail.com"
-                          git remote set-url origin https://ganislp:$GIT_API_TOKEN@github.com/DevSecOpsCICDPipeline/frac-dev-sec-ops-k8s.git
-                          git add .
-                          git commit -am "Updated docker image"
-                          git push -u origin feature-$BUILD_ID
-                          '''
+                        //   #### Commit and Push to Feature Branch ####
+                        //   git config --global user.email "ganislp@gmail.com"
+                        //   git remote set-url origin https://ganislp:$GIT_API_TOKEN@github.com/DevSecOpsCICDPipeline/frac-dev-sec-ops-k8s.git
+                        //   git add .
+                        //   git commit -am "Updated docker image"
+                        //   git push -u origin feature-$BUILD_ID
+                        //   '''
 
                          }
                         }
-                    }
+                    
                     stage('K8S - Raise PR'){
                     //     when {
                     //   branch 'PR*'
                     // }
                     steps{
-                      sh '''
-                    curl -L \
-                    -X POST \
-                    -H "Accept: application/vnd.github+json" \
-                    -H "Authorization: Bearer $GIT_API_TOKEN" \
-                    -H "X-GitHub-Api-Version: 2022-11-28" \
-                     https://api.github.com/repos/DevSecOpsCICDPipeline/frac-dev-sec-ops-k8s/pulls \
-                    -d '{"title":"Update Docker Image","body":"Updated docker image in deployment manifast","head":"feature-$BUILD_ID","base":"main"}'
+                      sh 'echo K8S - Raise PR'
+                    //   sh '''
+                    // curl -L \
+                    // -X POST \
+                    // -H "Accept: application/vnd.github+json" \
+                    // -H "Authorization: Bearer $GIT_API_TOKEN" \
+                    // -H "X-GitHub-Api-Version: 2022-11-28" \
+                    //  https://api.github.com/repos/DevSecOpsCICDPipeline/frac-dev-sec-ops-k8s/pulls \
+                    // -d '{"title":"Update Docker Image","body":"Updated docker image in deployment manifast","head":"feature-$BUILD_ID","base":"main"}'
                      
-                      '''
+                    //   '''
                     }
                     }
 
                     stage('App Deployed?'){
                       steps{
-                        timeout(time: 1,unit:'DAYS'){
-                          input message: 'Is the PR Merged and ArgoCD Synced?',ok:'YES! PR is Merged and ArgoCD Application is Synced'
+                         sh 'echoApp Deployed?'
+                        // timeout(time: 1,unit:'DAYS'){
+                        //   input message: 'Is the PR Merged and ArgoCD Synced?',ok:'YES! PR is Merged and ArgoCD Application is Synced'
 
-                        }
+                        // }
                       }
                     }
 
@@ -237,11 +240,11 @@
               post {
                 always {
 
-                  script{
-                    if(fileExists('frac-dev-sec-ops-k8s')){
-                      sh 'rm -rf frac-dev-sec-ops-k8s'
-                    }
-                  }
+                  // script{
+                  //   if(fileExists('frac-dev-sec-ops-k8s')){
+                  //     sh 'rm -rf frac-dev-sec-ops-k8s'
+                  //   }
+                  // }
 
 
                   junit allowEmptyResults: true, keepProperties: true, testResults: 'dependency-check-junit.xml'

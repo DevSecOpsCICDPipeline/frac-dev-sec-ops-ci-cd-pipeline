@@ -10,6 +10,7 @@
                 NVD_API_KEY = credentials('nvd-api-key')
                 SONAR_SCANNER_HOME = tool 'sonar-scanner-7.1.0'
                 GIT_API_TOKEN = credentials('git-api-token')
+                 TARGET_URL = "http://ec2-3-218-208-108.compute-1.amazonaws.com:8089/jpetstore/"
               }
 
               stages {
@@ -201,6 +202,15 @@
                     stage('DAST -OWSP ZAP'){
                       steps{
                         sh 'echo ${pwd}'
+                        script {
+                    sh """
+                    docker run --rm \
+                      -v \$PWD:/zap/wrk/:rw \
+                      -t owasp/zap2docker-stable zap-baseline.py \
+                      -t $TARGET_URL \
+                      -r zap-report.html
+                    """
+                }
                       //   sh '''
                       //  chmod -R 777 .
                       //   docker run --rm  -v ${pwd}:/zap/wrk/:rw owasp/zap2docker-stable zap-baseline.py \

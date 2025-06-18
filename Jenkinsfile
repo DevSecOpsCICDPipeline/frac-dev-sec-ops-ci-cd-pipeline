@@ -202,22 +202,22 @@
 
                     stage('DAST -OWSP ZAP'){
                       steps{
-                      //  script {
-                    // sh """
-                    // sudo chmod -R 775 $WORKSPACE
-                    // sudo chmod -R 777 $WORKSPACE
-                    // // sudo chmod 777 $PWD
-                    // docker run --rm \
-                    //   -v \$WORKSPACE:/zap/wrk/:rw \
-                    //   -t ghcr.io/zaproxy/zaproxy zap-baseline.py \
-                    //   -t $TARGET_URL \
-                    //   -c zap.yaml \
-                    //   -r zap-report.html
-                    //   -w zap_report.md
-                    //   -J zap_json-report.json
-                    //   -x zap_xml_report.xml
-                    // """
-              //  }
+                        script {
+                    sh """
+                    sudo chmod -R 775 $WORKSPACE
+                    sudo chmod -R 777 $WORKSPACE
+                    // sudo chmod 777 $PWD
+                    docker run --rm \
+                      -v \$WORKSPACE:/zap/wrk/:rw \
+                      -t ghcr.io/zaproxy/zaproxy zap-baseline.py \
+                      -t $TARGET_URL \
+                      -c zap.yaml \
+                      -r zap-report.html
+                      -w zap_report.md
+                      -J zap_json-report.json
+                      -x zap_xml_report.xml
+                    """
+                }
                       //   sh '''
                       //  chmod -R 777 .
                       //   docker run --rm  -v ${pwd}:/zap/wrk/:rw owasp/zap2docker-stable zap-baseline.py \

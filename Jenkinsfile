@@ -202,7 +202,7 @@
 
                     stage('DAST -OWSP ZAP'){
                       steps{
-                        script {
+                      //  script {
                     // sh """
                     // sudo chmod -R 775 $WORKSPACE
                     // sudo chmod -R 777 $WORKSPACE
@@ -217,7 +217,7 @@
                     //   -J zap_json-report.json
                     //   -x zap_xml_report.xml
                     // """
-                }
+              //  }
                       //   sh '''
                       //  chmod -R 777 .
                       //   docker run --rm  -v ${pwd}:/zap/wrk/:rw owasp/zap2docker-stable zap-baseline.py \

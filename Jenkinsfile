@@ -203,7 +203,8 @@
                       steps{
                         script {
                     sh """
-                    sudo chmod 777 $PWD
+                    chmod -R 777 $WORKSPACE
+                    // sudo chmod 777 $PWD
                     docker run --rm \
                       -v \$PWD:/zap/wrk/:rw \
                       -t ghcr.io/zaproxy/zaproxy zap-baseline.py \

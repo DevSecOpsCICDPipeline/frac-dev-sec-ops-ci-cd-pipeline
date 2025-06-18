@@ -209,6 +209,9 @@
                       -t ghcr.io/zaproxy/zaproxy zap-baseline.py \
                       -t $TARGET_URL \
                       -r zap-report.html
+                      -w zap_report.md
+                      -J zap_json-report.json
+                      -x zap_xml_report.xml
                     """
                 }
                       //   sh '''

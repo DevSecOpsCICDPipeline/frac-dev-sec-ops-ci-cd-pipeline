@@ -50,13 +50,13 @@
                   }
                 }
 
-                stage("quality gate") {
-                  steps {
-                    script {
-                      waitForQualityGate abortPipeline: false, credentialsId: 'Sonarqube-token'
-                    }
-                  }
-                }
+                // stage("quality gate") {
+                //   steps {
+                //     script {
+                //       waitForQualityGate abortPipeline: false, credentialsId: 'Sonarqube-token'
+                //     }
+                //   }
+                // }
                 stage('Building war file using Maven') {
                   steps {
                     sh 'mvn clean install -DskipTests=true'

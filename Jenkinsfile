@@ -201,12 +201,12 @@
                     }
                     stage('DAST -OWSP ZAP'){
                       steps{
-                        sh 'echo ${pwd}'
                         script {
                     sh """
+                    sudo chmod 777 $PWD
                     docker run --rm \
                       -v \$PWD:/zap/wrk/:rw \
-                      -t owasp/zap2docker-stable zap-baseline.py \
+                      -t ghcr.io/zaproxy/zaproxy zap-baseline.py \
                       -t $TARGET_URL \
                       -r zap-report.html
                     """
@@ -262,3 +262,4 @@
             //   -Dsonar.projectKey=frac-dev-sec-solar-system \
             //   -Dsonar.host.url=http://ec2-44-214-89-229.compute-1.amazonaws.com:9000 \
             //   -Dsonar.login=sqp_d85607ace1beeba2193f628068e73f8bfbbe0295
+            // docker run -v $(pwd):/zap/wrk/:rw -t ghcr.io/zaproxy/zaproxy zap-baseline.py -t http://ec2-3-218-208-108.compute-1.amazonaws.com:8089/jpetstore/ -r test-zap-report.html

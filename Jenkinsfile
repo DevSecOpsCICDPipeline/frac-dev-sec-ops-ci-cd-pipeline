@@ -1,3 +1,5 @@
+ @Library('skyway-trusted-shared-library') _       
+        
             pipeline {
               agent any
 
@@ -26,8 +28,7 @@
                 }
                 stage('Compiling Maven Code') {
                   steps {
-                    sh 'mvn -N io.takari:maven:wrapper'
-                    sh 'mvn clean compile'
+                    compileMaven() // custom step from vars/compileMaven.groovyle'
                   }
                 }
 

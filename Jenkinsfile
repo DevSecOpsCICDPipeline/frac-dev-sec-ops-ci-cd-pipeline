@@ -90,11 +90,15 @@
                     }
                     stage("Image Scanning using TRIVY"){
                          steps{
+                          script{
                            trivyScan.vulnerability("slpavaniv/frac-spring-project:${BUILD_TAG}")
+                          }
                         }
                         post{
                             always{
+                               script{
                                 trivyScan.reportsConverter()
+                               }
                             }
                         }
                     }

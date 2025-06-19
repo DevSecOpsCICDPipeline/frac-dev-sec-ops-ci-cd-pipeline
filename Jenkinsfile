@@ -90,39 +90,11 @@
                     }
                     stage("Image Scanning using TRIVY"){
                          steps{
-                         sh '''
-                         trivy image slpavaniv/frac-spring-project:${BUILD_TAG} \
-                         --severity LOW,MEDIUM,HIGH \
-                         --exit-code 0 \
-                         --quiet \
-                         --format json -o trivy-image-MEDIUM-results.json
-
-                         trivy image slpavaniv/frac-spring-project:${BUILD_TAG} \
-                         --severity CRITICAL \
-                         --exit-code 0 \
-                         --quiet \
-                         --format json -o trivy-image-CRITICAL-results.json
-                         '''
+                           trivyScan.vulnerability("slpavaniv/frac-spring-project:${BUILD_TAG}")
                         }
                         post{
                             always{
-                                sh'''
-                                trivy convert \
-                                --format template --template "@/usr/local/share/trivy/templates/html.tpl" \
-                                --output trivy-image-MEDIUM-results.html trivy-image-MEDIUM-results.json
-
-                                trivy convert \
-                                --format template --template "@/usr/local/share/trivy/templates/html.tpl" \
-                                --output trivy-image-CRITICAL-results.html trivy-image-CRITICAL-results.json
-
-                                  trivy convert \
-                                --format template --template "@/usr/local/share/trivy/templates/junit.tpl" \
-                                --output trivy-image-MEDIUM-results.xml trivy-image-MEDIUM-results.json
-
-                                trivy convert \
-                                --format template --template "@/usr/local/share/trivy/templates/junit.tpl" \
-                                --output trivy-image-CRITICAL-results.xml trivy-image-CRITICAL-results.json
-                                '''
+                                trivyScan.reportsConverter()
                             }
                         }
                     }

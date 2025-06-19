@@ -28,13 +28,13 @@
             refspec: '+refs/heads/feature/advanced-domos:refs/remotes/origin/feature/advanced-domos'
     }
 }
-                // stage ('checkout SCM') {
-                //  steps {
-                //     git branch: 'feature/advanced-domos',
-                //     url: 'https://github.com/DevSecOpsCICDPipeline/frac-dev-sec-ops-ci-cd-pipeline.git',
-                //     refspec: '+refs/heads/feature/advanced-domos:refs/remotes/origin/feature/advanced-domos'
-                //  }
-                // }
+                stage ('checkout SCM') {
+                 steps {
+                    git branch: 'feature/advanced-domos',
+                    url: 'https://github.com/DevSecOpsCICDPipeline/frac-dev-sec-ops-ci-cd-pipeline.git',
+                    refspec: '+refs/heads/feature/advanced-domos:refs/remotes/origin/feature/advanced-domos'
+                 }
+                }
                 stage('Compiling Maven Code') {
                   steps {
                     sh 'mvn -N io.takari:maven:wrapper'

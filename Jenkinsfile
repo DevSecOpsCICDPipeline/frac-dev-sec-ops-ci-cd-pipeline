@@ -127,6 +127,9 @@
                     }
 
                        stage ('Push Docker Image'){
+                         when {
+                branch pattern: "feature/.*", comparator: "REGEXP"
+            }
                         steps {
                           withDockerRegistry(credentialsId: 'docker-hub-credentials', url:"") {
                              sh  'docker push  slpavaniv/frac-spring-project:${BUILD_TAG}'
@@ -149,6 +152,9 @@
 
                 
                 stage ('K8S Update Image Tag'){
+                   when {
+                branch pattern: "feature/.*", comparator: "REGEXP"
+            }
                   //  when {
                   //   branch 'main*'
                   //  }
@@ -175,6 +181,9 @@
                         }
                     
                     stage('K8S - Raise PR'){
+                       when {
+                branch pattern: "feature/.*", comparator: "REGEXP"
+            }
                     //     when {
                     //   branch 'PR*'
                     // }
@@ -194,6 +203,9 @@
                     }
 
                     stage('App Deployed?'){
+                       when {
+                branch pattern: "feature/.*", comparator: "REGEXP"
+            }
                       steps{
                          sh 'echoApp Deployed?'
                         // timeout(time: 1,unit:'DAYS'){
@@ -204,6 +216,9 @@
                     }
 
                     stage('DAST -OWSP ZAP'){
+                       when {
+                branch pattern: "feature/.*", comparator: "REGEXP"
+            }
                       steps{
                         sh 'echo DAST -OWSP ZAP'
                 //         script {

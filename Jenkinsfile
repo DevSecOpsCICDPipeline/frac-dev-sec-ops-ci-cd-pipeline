@@ -91,20 +91,20 @@
                     stage("Image Scanning using TRIVY"){
                          steps{
                           script{
-                          //  trivyScan.vulnerability("slpavaniv/frac-spring-project:${BUILD_TAG}")
-                          trivyScanScript.vulnerability(imageName :"slpavaniv/frac-spring-project:${BUILD_TAG}",severity : "LOW", exitCode: "0")
+                         trivyScan.vulnerability("slpavaniv/frac-spring-project:${BUILD_TAG}")
+                         // trivyScanScript.vulnerability(imageName :"slpavaniv/frac-spring-project:${BUILD_TAG}",severity : "LOW", exitCode: "0")
                           // trivyScanScript.vulnerability(imageName :"slpavaniv/frac-spring-project:${BUILD_TAG}",severity : "MEDIUM", exitCode: "0")
                           // trivyScanScript.vulnerability(imageName :"slpavaniv/frac-spring-project:${BUILD_TAG}",severity : "HIGH", exitCode: "0")
                           // trivyScanScript.vulnerability(imageName :"slpavaniv/frac-spring-project:${BUILD_TAG}",severity : "CRITICAL", exitCode: "0")
                           }
                         }
-                        // post{
-                        //     always{
-                        //        script{
-                        //         trivyScan.reportsConverter()
-                        //        }
-                        //     }
-                        // }
+                        post{
+                            always{
+                               script{
+                                trivyScan.reportsConverter()
+                               }
+                            }
+                        }
                     }
 
                        stage ('Push Docker Image'){

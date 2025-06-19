@@ -100,9 +100,9 @@
                         }
                         post{
                             always{
-                               script{
-                                trivyScan.reportsConverter()
-                               }
+                              //  script{
+                              //   trivyScan.reportsConverter()
+                              //  }
                             }
                         }
                     }

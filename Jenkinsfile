@@ -21,7 +21,7 @@
                 }
                 stage ('checkout SCM') {
                  steps {
-               git branch: 'main', changelog: false, poll: false, url: 'https://github.com/DevSecOpsCICDPipeline/frac-dev-sec-ops-ci-cd-pipeline.git'
+               git branch: 'feature/advanced-domos', changelog: false, poll: false, url: 'https://github.com/DevSecOpsCICDPipeline/frac-dev-sec-ops-ci-cd-pipeline.git'
                  }
                 }
                 stage('Compiling Maven Code') {

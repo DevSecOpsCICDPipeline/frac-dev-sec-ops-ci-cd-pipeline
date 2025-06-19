@@ -12,6 +12,9 @@
                 GIT_API_TOKEN = credentials('git-api-token')
                  TARGET_URL = "http://ec2-3-218-208-108.compute-1.amazonaws.com:8089/jpetstore/"
               }
+               options {
+        skipDefaultCheckout(true) // Prevents default checkout, we do it manually
+    }
 
               stages {
                 stage('Cleaning Workspace') {
